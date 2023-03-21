@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FormEvent, useState } from "react";
+
+import { RenderInputs } from "./components/RenderInputs";
+import { config } from "utils/constants";
+
+import * as S from "./styles";
 
 function App() {
+  const [data, setData] = useState<string>("");
+  const [showed, setShowed] = useState<boolean>(false);
+
+  const handleSubmitForm = (e: FormEvent) => {
+    e.preventDefault();
+    setShowed(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <S.Wrapper className="App">
+      <h1>Log in</h1>
+      <S.Form>
+        <RenderInputs config={config} onChangeIputs={(data) => setData(data)} />
+        <S.Button onClick={handleSubmitForm}>Submit</S.Button>
+      </S.Form>
+      <p>{showed && data}</p>
+    </S.Wrapper>
   );
 }
 
